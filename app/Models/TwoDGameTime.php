@@ -10,11 +10,11 @@ class TwoDGameTime extends Model
 {
     use HasUuids;
 
-    protected $fillable = ["name", "end_time", "is_active"];
+    protected $fillable = ['name', 'end_time', 'is_active'];
 
     protected $casts = [
-        "end_time" => "time",
-        "is_active" => "boolean",
+        'end_time' => 'datetime:H:i:s',
+        'is_active' => 'boolean',
     ];
 
     public function games(): HasMany
