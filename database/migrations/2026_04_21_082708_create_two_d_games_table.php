@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create("two_d_games", function (Blueprint $table) {
             $table->uuid("id")->primary();
-            $table->foreignUuid("game_time_id")->constrained("two_game_times");
+            $table->foreignUuid("game_time_id")->constrained("two_d_game_times");
             $table->timestamp("release_date");
             $table->string("status", 20)->index();
             $table->timestamps();

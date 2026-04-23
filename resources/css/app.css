@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,6 +6,84 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Inter", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-headline: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+    --text-2xs: 0.625rem;
+    --text-2xs--line-height: 1;
+    --text-3xs: 0.5625rem;
+    --text-3xs--line-height: 1;
+    --text-4xs: 0.4375rem;
+    --text-4xs--line-height: 1;
+
+    --color-bg: var(--sp-bg);
+    --color-surface: var(--sp-surface);
+    --color-panel: var(--sp-panel);
+    --color-overlay: var(--sp-overlay);
+    --color-sp-base: var(--sp-bg);
+    --color-text: var(--sp-text);
+    --color-subtext: var(--sp-subtext);
+    --color-muted: var(--sp-muted);
+    --color-border: var(--sp-border);
+    --color-line: var(--sp-line);
+    --color-accent: var(--sp-accent);
+    --color-accent-dim: var(--sp-accent-dim);
+}
+
+:root {
+    --sp-bg: #ffffff;
+    --sp-surface: #f5f5f5;
+    --sp-panel: #e0e0e0;
+    --sp-overlay: #d0d0d0;
+    --sp-text: #000000;
+    --sp-subtext: #404040;
+    --sp-muted: #707070;
+    --sp-border: #cccccc;
+    --sp-line: #000000;
+    --sp-accent: #000000;
+    --sp-accent-dim: #666666;
+}
+
+.dark {
+    --sp-bg: #000000;
+    --sp-surface: #121212;
+    --sp-panel: #1e1e1e;
+    --sp-overlay: #2a2a2a;
+    --sp-text: #ffffff;
+    --sp-subtext: #b0b0b0;
+    --sp-muted: #707070;
+    --sp-border: #333333;
+    --sp-line: #ffffff;
+    --sp-accent: #ffffff;
+    --sp-accent-dim: #999999;
+}
+
+@layer utilities {
+    .grid-rows-10 {
+        grid-template-rows: repeat(10, minmax(0, 1fr));
+    }
+
+    .icon-fill {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--sp-bg);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--sp-overlay);
+    border-radius: 10px;
 }
