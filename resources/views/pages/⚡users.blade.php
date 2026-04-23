@@ -14,16 +14,12 @@ new class extends Component {
     public string $sortDir = 'desc';
 
     public ?string $editingUserId = null;
-    public ?string $generatedUsername = null;
-    public ?string $generatedPassword = null;
 
     public function edit(string $id): void
     {
         $user = User::findOrFail($id);
         $this->editingUserId = $user->id;
         $this->form->setUser($user);
-        $this->generatedUsername = null;
-        $this->generatedPassword = null;
     }
 
     public function cancelEdit(): void
@@ -39,9 +35,7 @@ new class extends Component {
             $this->form->update($user);
             $this->editingUserId = null;
         } else {
-            $credentials = $this->form->store();
-            $this->generatedUsername = $credentials['username'];
-            $this->generatedPassword = $credentials['password'];
+            $this->form->store();
         }
 
         unset($this->users);
@@ -103,7 +97,7 @@ new class extends Component {
             <table class="w-full text-left">
                 <thead class="sticky top-0 bg-bg z-10 border-b border-border">
                     <tr>
-                        <th class="px-5 py-3 w-12">
+                        <th class="px-5 py-3 w-68">
                             <button wire:click="sort('id')" class="flex items-center gap-1 text-3xs uppercase tracking-wider text-muted font-bold hover:text-text transition-colors cursor-pointer">
                                 ID
                                 @if($sortBy === 'id')
@@ -119,7 +113,7 @@ new class extends Component {
                                 @endif
                             </button>
                         </th>
-                        <th class="px-5 py-3">
+                        <th class="px-5 py-3 w-40">
                             <button wire:click="sort('phone')" class="flex items-center gap-1 text-3xs uppercase tracking-wider text-muted font-bold hover:text-text transition-colors cursor-pointer">
                                 Phone
                                 @if($sortBy === 'phone')
@@ -137,7 +131,7 @@ new class extends Component {
                             class="border-b border-border transition-colors {{ $editingUserId === $user->id ? 'bg-panel' : 'hover:bg-surface' }}"
                         >
                             <td class="px-5 py-3.5">
-                                <span class="text-2xs text-muted font-mono">{{ substr($user->id, 0, 8) }}…</span>
+                                <span class="text-2xs text-muted font-mono">{{ $user->id }}</span>
                             </td>
                             <td class="px-5 py-3.5">
                                 <span class="text-sm font-medium text-text">{{ $user->nickname }}</span>
@@ -178,27 +172,6 @@ new class extends Component {
                 <button wire:click="cancelEdit" class="material-symbols-outlined text-base text-muted hover:text-text transition-colors cursor-pointer">close</button>
             @endif
         </div>
-
-        {{-- Credentials flash (create only) --}}
-        @if($generatedUsername)
-            <div class="bg-panel border border-border p-4 flex flex-col gap-3">
-                <div class="flex items-center justify-between">
-                    <span class="text-2xs uppercase tracking-wider font-bold text-subtext">Credentials</span>
-                    <button wire:click="dismissCredentials" class="material-symbols-outlined text-base text-muted hover:text-text transition-colors cursor-pointer">close</button>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <div>
-                        <span class="text-3xs uppercase tracking-wider text-muted font-bold block mb-0.5">Username</span>
-                        <span class="text-xs font-mono text-text break-all">{{ $generatedUsername }}</span>
-                    </div>
-                    <div>
-                        <span class="text-3xs uppercase tracking-wider text-muted font-bold block mb-0.5">Password</span>
-                        <span class="text-xs font-mono text-text break-all">{{ $generatedPassword }}</span>
-                    </div>
-                </div>
-                <span class="text-3xs text-muted">Save these — password cannot be recovered.</span>
-            </div>
-        @endif
 
         {{-- Form --}}
         <form wire:submit="save" class="flex flex-col gap-4">
